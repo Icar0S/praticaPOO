@@ -120,16 +120,17 @@ public class Campeonato {
                 a = 0; b = 2; break;
             case 2:
                 a = 0; b = 3; break;
-
             case 4:
                 a = 1; b = 2; break;
             case 5:
                 a = 2; b =3; break;
+            case 6:
+                a = 3; b = 3; break;
         }
 
         Match m = this.getMatch(selecoes.get(a), selecoes.get(b));
         if (m == null)
-            return new Match(a,b);
+            return new Match(selecoes.get(a), selecoes.get(b));
         else
             return m;
     }
