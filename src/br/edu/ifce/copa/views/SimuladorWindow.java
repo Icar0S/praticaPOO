@@ -48,14 +48,20 @@ public class SimuladorWindow extends javax.swing.JFrame implements ISimuladorVie
                     p.getDerrotas(),
                     p.getSg()
             });
-            this.jComboBox1.addItem(p.getSelecao().getNome());
-            this.jComboBox2.addItem(p.getSelecao().getNome());
+        }
+    }
+
+    @Override
+    public void exibirSelecoes(Collection<Selecao> selecoes) {
+        for (Selecao s : selecoes) {
+            this.selecaoBComboBox.addItem(s.getNome());
+            this.selecaoAComboBox.addItem(s.getNome());
         }
     }
 
     private void clearData() {
-        this.jComboBox1.removeAllItems();
-        this.jComboBox2.removeAllItems();
+        this.selecaoBComboBox.removeAllItems();
+        this.selecaoAComboBox.removeAllItems();
         this.setupTable();
     }
 
@@ -68,22 +74,22 @@ public class SimuladorWindow extends javax.swing.JFrame implements ISimuladorVie
 
     @Override
     public void selectSelecaoA(int selecaoIdx) {
-        this.jComboBox1.setSelectedIndex(selecaoIdx);
+        this.selecaoAComboBox.setSelectedIndex(selecaoIdx);
     }
 
     @Override
     public void selectSelecaoB(int selecaoIdx) {
-        this.jComboBox2.setSelectedIndex(selecaoIdx);
+        this.selecaoBComboBox.setSelectedIndex(selecaoIdx);
     }
 
     @Override
     public void setGolsA(int golsA) {
-        this.jTextField1.setText(String.valueOf(golsA));
+        this.golsATextField.setText(String.valueOf(golsA));
     }
 
     @Override
     public void setGolsB(int golsB) {
-        this.jTextField2.setText(String.valueOf(golsB));
+        this.golsBTextField.setText(String.valueOf(golsB));
     }
 
     @SuppressWarnings("unchecked")
@@ -96,11 +102,11 @@ public class SimuladorWindow extends javax.swing.JFrame implements ISimuladorVie
         selecoesTable = new javax.swing.JTable();
         label1 = new java.awt.Label();
         label2 = new java.awt.Label();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        golsATextField = new javax.swing.JTextField();
+        selecaoBComboBox = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        golsBTextField = new javax.swing.JTextField();
+        selecaoAComboBox = new javax.swing.JComboBox<>();
         nextButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
 
@@ -119,18 +125,18 @@ public class SimuladorWindow extends javax.swing.JFrame implements ISimuladorVie
         label2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         label2.setText("Adicionar Jogo");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField1.setText("0");
+        golsATextField.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        golsATextField.setText("0");
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        selecaoBComboBox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("x");
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField2.setText("0");
+        golsBTextField.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        golsBTextField.setText("0");
 
-        jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        selecaoAComboBox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         nextButton.setText("Próximo Jogo");
         nextButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -163,15 +169,15 @@ public class SimuladorWindow extends javax.swing.JFrame implements ISimuladorVie
                                                         .addGroup(PainelGrupoALayout.createSequentialGroup()
                                                                 .addGroup(PainelGrupoALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addComponent(selecaoAComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(golsATextField, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                                 .addComponent(jLabel1)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(golsBTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(selecaoBComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(PainelGrupoALayout.createSequentialGroup()
                                                                 .addComponent(nextButton)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -192,11 +198,11 @@ public class SimuladorWindow extends javax.swing.JFrame implements ISimuladorVie
                                 .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(PainelGrupoALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(selecaoBComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(golsATextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel1)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(golsBTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(selecaoAComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(PainelGrupoALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(nextButton)
@@ -226,19 +232,19 @@ public class SimuladorWindow extends javax.swing.JFrame implements ISimuladorVie
 
     private void saveButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseClicked
         this.presenter.onMatchSaved(
-                this.jComboBox1.getSelectedIndex(),
-                this.jComboBox2.getSelectedIndex(),
-                Integer.parseInt(jTextField1.getText()),
-                Integer.parseInt(jTextField2.getText())
+                this.selecaoAComboBox.getSelectedIndex(),
+                this.selecaoBComboBox.getSelectedIndex(),
+                Integer.parseInt(golsATextField.getText()),
+                Integer.parseInt(golsBTextField.getText())
         );
     }
 
     private void nextButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nextButtonMouseClicked
         this.presenter.onNextMatch(
-                this.jComboBox1.getSelectedIndex(),
-                this.jComboBox2.getSelectedIndex(),
-                Integer.parseInt(jTextField1.getText()),
-                Integer.parseInt(jTextField2.getText())
+                this.selecaoAComboBox.getSelectedIndex(),
+                this.selecaoBComboBox.getSelectedIndex(),
+                Integer.parseInt(golsATextField.getText()),
+                Integer.parseInt(golsBTextField.getText())
         );
     }
 
@@ -252,12 +258,12 @@ public class SimuladorWindow extends javax.swing.JFrame implements ISimuladorVie
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PainelGrupoA;
     private javax.swing.JComboBox<String> gruposComboBox;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> selecaoBComboBox;
+    private javax.swing.JComboBox<String> selecaoAComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField golsATextField;
+    private javax.swing.JTextField golsBTextField;
     private java.awt.Label label1;
     private java.awt.Label label2;
     private javax.swing.JButton nextButton;

@@ -50,11 +50,10 @@ public class SimuladorPresenter {
                         .setGroupId(this.selectedGroupId)
                         .build()
         );
+        this.view.exibirSelecoes(this.getSelecoes());
     }
 
     private ArrayList<Selecao> getSelecoes() {
-        //for(int i = )
-
         return this.campeonato.selecoesPorGrupo(this.selectedGroupId);
     }
 

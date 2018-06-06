@@ -101,6 +101,23 @@ public class Pontuacao implements Comparable<Pontuacao> {
 
     @Override
     public int compareTo(Pontuacao pontuacao) {
-        return this.getPontos() - pontuacao.getPontos();
+        int compare = pontuacao.getPontos() - this.getPontos();
+
+        if (compare == 0)
+            compare = pontuacao.getVitorias() - this.getVitorias();
+
+        if (compare == 0)
+            compare = pontuacao.getSg() - this.getSg();
+
+        if(compare == 0)
+            compare = pontuacao.getGp() - this.getGp();
+
+        if(compare == 0)
+            compare = this.getGc() - pontuacao.getGp();
+        return compare;
+    }
+
+    public boolean equals(Pontuacao o) {
+        return o.getSelecao().equals(this.getSelecao());
     }
 }

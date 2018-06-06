@@ -18,6 +18,7 @@ import java.util.Collection;
  */
 interface ISimuladorView {
     void exibirPontuacao(Collection<Pontuacao> pontuacoes);
+    void exibirSelecoes(Collection<Selecao> selecoes);
     void setGroups(ArrayList<Grupo> groups);
     void selectSelecaoA(int selecaoIdx);
     void selectSelecaoB(int selecaoIdx);

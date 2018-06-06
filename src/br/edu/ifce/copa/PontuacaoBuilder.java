@@ -2,6 +2,7 @@ package br.edu.ifce.copa;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class PontuacaoBuilder {
@@ -33,8 +34,10 @@ public class PontuacaoBuilder {
                 this.givePoints(a, b, m);
             }
         }
+        ArrayList<Pontuacao> p = new ArrayList<>(pontuacoes.values());
+        Collections.sort(p);
 
-        return pontuacoes.values();
+        return p;
     }
 
     private void givePoints(Pontuacao a, Pontuacao b, Match m) {
