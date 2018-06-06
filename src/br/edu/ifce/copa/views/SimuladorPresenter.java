@@ -53,6 +53,8 @@ public class SimuladorPresenter {
     }
 
     private ArrayList<Selecao> getSelecoes() {
+        //for(int i = )
+
         return this.campeonato.selecoesPorGrupo(this.selectedGroupId);
     }
 

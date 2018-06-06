@@ -9,7 +9,8 @@ import java.util.Random;
  * @author ikrov
  */
 public class Campeonato {
-    
+
+    private static final int PARTIDAS_POR_GRUPO = 6;
     private final ArrayList<Selecao> selecoes;
     private final ArrayList<Grupo> grupos;
     private final ArrayList<Match> partidas;
@@ -93,23 +94,39 @@ public class Campeonato {
         return this.grupos;
     }
 
-    public void addRandomMatch() {
+    /*public void addRandomMatch() {
         int a = Math.abs(new Random().nextInt() % this.selecoes.size());
-        int b = Math.abs(new Random().nextInt() % this.selecoes.size());
+        int b = Math.abs((new Random().nextInt() +1) % this.selecoes.size());
         int golsA = Math.abs(new Random().nextInt() % 4);
         int golsB = Math.abs(new Random().nextInt() % 4);
         Selecao selA = this.selecoes.get(a);
         Selecao selB = this.selecoes.get(b);
         
         this.addMatch(selA, selB, golsA, golsB);
-    }
-    
+    }*/
+
+
     public Match getMatch(int groupId, int matchNumber) {
         ArrayList<Selecao> selecoes = this.selecoesPorGrupo(groupId);
-        Selecao a = selecoes.get(matchNumber % SELECOES_POR_GRUPO);
-        Selecao b = selecoes.get((matchNumber + 1) % SELECOES_POR_GRUPO);
-        Match m = this.getMatch(a, b);
+        int partida = matchNumber % PARTIDAS_POR_GRUPO;
+        int a,b;
 
+        switch (partida){
+            default:
+            case 0:
+                a = 0; b = 1; break ;
+            case 1:
+                a = 0; b = 2; break;
+            case 2:
+                a = 0; b = 3; break;
+            case 4:
+                a = 1; b = 2; break;
+            case 5:
+                a = 2; b =3; break;
+        }
+        //Selecao a = selecoes.get(matchNumber % SELECOES_POR_GRUPO);
+        //Selecao b = selecoes.get((matchNumber + 1) % SELECOES_POR_GRUPO)
+        Match m = this.getMatch(a, b);
         if (m == null)
             return new Match(a, b);
         else

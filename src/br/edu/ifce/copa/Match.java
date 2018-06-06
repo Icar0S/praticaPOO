@@ -25,9 +25,7 @@ public class Match {
         this.golsB = golsB;
     }
 
-    public Selecao getA() {
-        return a;
-    }
+    public Selecao getA() {return a; }
 
     public Selecao getB() {
         return b;
