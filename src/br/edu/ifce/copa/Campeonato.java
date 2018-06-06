@@ -109,26 +109,27 @@ public class Campeonato {
     public Match getMatch(int groupId, int matchNumber) {
         ArrayList<Selecao> selecoes = this.selecoesPorGrupo(groupId);
         int partida = matchNumber % PARTIDAS_POR_GRUPO;
-        int a,b;
 
-        switch (partida){
+        int a, b;
+        
+        switch (partida) {
             default:
             case 0:
-                a = 0; b = 1; break ;
+                a = 0; b = 1; break;
             case 1:
                 a = 0; b = 2; break;
             case 2:
                 a = 0; b = 3; break;
+
             case 4:
                 a = 1; b = 2; break;
             case 5:
                 a = 2; b =3; break;
         }
-        //Selecao a = selecoes.get(matchNumber % SELECOES_POR_GRUPO);
-        //Selecao b = selecoes.get((matchNumber + 1) % SELECOES_POR_GRUPO)
-        Match m = this.getMatch(a, b);
+
+        Match m = this.getMatch(selecoes.get(a), selecoes.get(b));
         if (m == null)
-            return new Match(a, b);
+            return new Match(a,b);
         else
             return m;
     }
