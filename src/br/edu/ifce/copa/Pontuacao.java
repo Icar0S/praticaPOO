@@ -113,7 +113,7 @@ public class Pontuacao implements Comparable<Pontuacao> {
             compare = pontuacao.getGp() - this.getGp();
 
         if(compare == 0)
-            compare = this.getGc() - pontuacao.getGp();
+            compare = this.getGc() - pontuacao.getGc();
         return compare;
     }
 

@@ -121,8 +121,9 @@ public class Campeonato {
     }
 
     private void getSelecoesOitavas() {
-        for(int i = 0; i < 7; i++){
-           // this.getSelecoesOitavas() ;
+        for(int i = 0; i <= 7; i++){
+
+           this.getSelecoesOitavas() ;
             }
     }
 
