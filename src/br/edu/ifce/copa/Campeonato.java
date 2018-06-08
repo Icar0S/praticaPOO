@@ -64,6 +64,11 @@ public class Campeonato {
         addSelecao("Japão");
         addSelecao("Polônia");
         addSelecao("Senegal");
+
+        this.grupos.add(new Grupo(new String("Oitavas ")));
+        this.grupos.add(new Grupo(new String("Quartas ")));
+        this.grupos.add(new Grupo(new String("Semis ")));
+        this.grupos.add(new Grupo(new String("Final")));
     }
 
     public Selecao addSelecao(String selecao) {
@@ -80,6 +85,19 @@ public class Campeonato {
     }
 
     public ArrayList<Selecao> selecoesPorGrupo(int grupoId) {
+
+        if(grupoId == 8)
+            this.getSelecoesOitavas();
+
+        if(grupoId == 9)
+            this.getSelecoesQuartas();
+
+        if(grupoId == 10)
+            this.getSelecoesSemis();
+
+        if(grupoId == 11)
+            this.getSelecoesFinal();
+
         ArrayList<Selecao> list = new ArrayList<>();
         int start = grupoId * SELECOES_POR_GRUPO;
         int end = start + SELECOES_POR_GRUPO;
@@ -89,6 +107,22 @@ public class Campeonato {
         Collections.sort(list);
 
         return list;
+    }
+
+    private void getSelecoesFinal() {
+        for(int i = 0; i < 7; i++){
+
+        }
+    }
+
+    private void getSelecoesSemis() {
+    }
+
+    private void getSelecoesQuartas() {
+    }
+
+    private void getSelecoesOitavas() {
+
     }
 
     public ArrayList<Grupo> getGrupos() {
@@ -118,8 +152,8 @@ public class Campeonato {
                 b = 1;
                 break;
             case 1:
-                a = 0;
-                b = 2;
+                a = 2;
+                b = 3;
                 break;
             case 2:
                 a = 0;
@@ -134,8 +168,8 @@ public class Campeonato {
                 b = 3;
                 break;
             case 6:
-                a = 2;
-                b = 3;
+                a = 0;
+                b = 2;
                 break;
         }
 

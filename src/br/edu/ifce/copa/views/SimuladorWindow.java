@@ -31,6 +31,7 @@ public class SimuladorWindow extends javax.swing.JFrame implements ISimuladorVie
         this.tableModel.addColumn("Vitorias");
         this.tableModel.addColumn("Empates");
         this.tableModel.addColumn("Derrotas");
+        this.tableModel.addColumn("Gols Pró");
         this.tableModel.addColumn("Saldo de Gols");
     }
 
@@ -46,6 +47,7 @@ public class SimuladorWindow extends javax.swing.JFrame implements ISimuladorVie
                     p.getVitorias(),
                     p.getEmpates(),
                     p.getDerrotas(),
+                    p.getGp(),
                     p.getSg()
             });
         }
