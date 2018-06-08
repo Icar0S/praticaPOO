@@ -110,10 +110,9 @@ public class Campeonato {
     }
 
     private void getSelecoesFinal() {
-        for(int i = 0; i < 7; i++){
 
         }
-    }
+
 
     private void getSelecoesSemis() {
     }
@@ -122,7 +121,9 @@ public class Campeonato {
     }
 
     private void getSelecoesOitavas() {
-
+        for(int i = 0; i < 7; i++){
+           // this.getSelecoesOitavas() ;
+            }
     }
 
     public ArrayList<Grupo> getGrupos() {
@@ -159,15 +160,15 @@ public class Campeonato {
                 a = 0;
                 b = 3;
                 break;
-            case 4:
+            case 3:
                 a = 1;
                 b = 2;
                 break;
-            case 5:
+            case 4:
                 a = 1;
                 b = 3;
                 break;
-            case 6:
+            case 5:
                 a = 0;
                 b = 2;
                 break;
