@@ -1,7 +1,6 @@
 package br.edu.ifce.copa;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -19,25 +18,29 @@ public class PontuacaoBuilder {
         return this;
     }
 
-    public Collection<Pontuacao> build() {
+    public ArrayList<Pontuacao> build() {
         ArrayList<Selecao> selecoes = this.campeonato.selecoesPorGrupo(this.groupId);
         HashMap<Selecao, Pontuacao> pontuacoes = new HashMap<>(selecoes.size());
 
-        for (Selecao s : selecoes) {
+        for (Selecao s : this.campeonato.getSelecoes()) {
             pontuacoes.put(s, new Pontuacao(s));
         }
 
         for (Match m : this.campeonato.getMatches()) {
             Pontuacao a = pontuacoes.get(m.getA());
             Pontuacao b = pontuacoes.get(m.getB());
-            if (a != null && b != null) {
-                this.givePoints(a, b, m);
-            }
+            this.givePoints(a, b, m);
         }
-        ArrayList<Pontuacao> p = new ArrayList<>(pontuacoes.values());
-        Collections.sort(p);
 
-        return p;
+        ArrayList<Pontuacao> list = new ArrayList<>(selecoes.size());
+        for (Pontuacao p: pontuacoes.values()) {
+            if (selecoes.contains(p.getSelecao()))
+                list.add(p);
+        }
+
+        Collections.sort(list);
+
+        return list;
     }
 
     private void givePoints(Pontuacao a, Pontuacao b, Match m) {

@@ -1,7 +1,14 @@
 
 package br.edu.ifce.copa;
 
+import br.edu.ifce.copa.groups.CommonGroup;
+import br.edu.ifce.copa.groups.GroupManager;
+import br.edu.ifce.copa.groups.OitavasManager;
+import com.sun.org.apache.bcel.internal.generic.Select;
+import javafx.print.Collation;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
@@ -10,17 +17,16 @@ import java.util.Random;
  */
 public class Campeonato {
 
-    private static final int PARTIDAS_POR_GRUPO = 7;
     private final ArrayList<Selecao> selecoes;
     private final ArrayList<Grupo> grupos;
     private final ArrayList<Match> partidas;
     private final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final int SELECOES_POR_GRUPO = 4;
 
     public Campeonato() {
         this.selecoes = new ArrayList<>();
         this.grupos = new ArrayList<>();
         this.partidas = new ArrayList<>();
+
         carregar();
     }
 
@@ -65,66 +71,32 @@ public class Campeonato {
         addSelecao("Polônia");
         addSelecao("Senegal");
 
-        this.grupos.add(new Grupo(new String("Oitavas ")));
-        this.grupos.add(new Grupo(new String("Quartas ")));
-        this.grupos.add(new Grupo(new String("Semis ")));
-        this.grupos.add(new Grupo(new String("Final")));
+        this.grupos.add(new Grupo("Oitavas"));
+        this.grupos.add(new Grupo("Quartas"));
+        this.grupos.add(new Grupo("Semis"));
+        this.grupos.add(new Grupo("Final"));
     }
 
-    public Selecao addSelecao(String selecao) {
-        int group = this.selecoes.size() / SELECOES_POR_GRUPO;
-        if (this.selecoes.size() % SELECOES_POR_GRUPO == 0) {
+    private void addSelecao(String selecao) {
+        int group = this.selecoes.size() / CommonGroup.SELECOES_POR_GRUPO;
+        if (this.selecoes.size() % CommonGroup.SELECOES_POR_GRUPO == 0) {
             char letter = this.alphabet.charAt(group);
             this.grupos.add(new Grupo(String.format("Grupo %s", letter)));
         }
 
         Selecao sel = new Selecao(selecao);
         this.selecoes.add(sel);
+    }
 
-        return sel;
+    private GroupManager getManager(int groupId) {
+        if (groupId == 8)
+            return new OitavasManager(this);
+        else
+            return new CommonGroup(this, groupId);
     }
 
     public ArrayList<Selecao> selecoesPorGrupo(int grupoId) {
-
-        if(grupoId == 8)
-            this.getSelecoesOitavas();
-
-        if(grupoId == 9)
-            this.getSelecoesQuartas();
-
-        if(grupoId == 10)
-            this.getSelecoesSemis();
-
-        if(grupoId == 11)
-            this.getSelecoesFinal();
-
-        ArrayList<Selecao> list = new ArrayList<>();
-        int start = grupoId * SELECOES_POR_GRUPO;
-        int end = start + SELECOES_POR_GRUPO;
-        for (int i = start; i < end; i++) {
-            list.add(this.selecoes.get(i));
-        }
-        Collections.sort(list);
-
-        return list;
-    }
-
-    private void getSelecoesFinal() {
-
-        }
-
-
-    private void getSelecoesSemis() {
-    }
-
-    private void getSelecoesQuartas() {
-    }
-
-    private void getSelecoesOitavas() {
-        for(int i = 0; i <= 7; i++){
-
-           this.getSelecoesOitavas() ;
-            }
+        return this.getManager(grupoId).getSelecoes();
     }
 
     public ArrayList<Grupo> getGrupos() {
@@ -143,43 +115,7 @@ public class Campeonato {
     }*/
 
     public Match getMatch(int groupId, int matchNumber) {
-        ArrayList<Selecao> selecoes = this.selecoesPorGrupo(groupId);
-        int partida = matchNumber % PARTIDAS_POR_GRUPO;
-        int a, b;
-
-        switch (partida) {
-            default:
-            case 0:
-                a = 0;
-                b = 1;
-                break;
-            case 1:
-                a = 2;
-                b = 3;
-                break;
-            case 2:
-                a = 0;
-                b = 3;
-                break;
-            case 3:
-                a = 1;
-                b = 2;
-                break;
-            case 4:
-                a = 1;
-                b = 3;
-                break;
-            case 5:
-                a = 0;
-                b = 2;
-                break;
-        }
-
-        Match m = this.getMatch(selecoes.get(a), selecoes.get(b));
-        if (m == null)
-            return new Match(selecoes.get(a), selecoes.get(b));
-        else
-            return m;
+        return this.getManager(groupId).getMatch(matchNumber);
     }
 
     public Match getMatch(Selecao a, Selecao b) {
@@ -204,5 +140,9 @@ public class Campeonato {
 
     public ArrayList<Match> getMatches() {
         return this.partidas;
+    }
+
+    public ArrayList<Selecao> getSelecoes() {
+        return this.selecoes;
     }
 }
