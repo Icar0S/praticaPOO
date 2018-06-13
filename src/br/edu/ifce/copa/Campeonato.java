@@ -4,23 +4,21 @@ package br.edu.ifce.copa;
 import br.edu.ifce.copa.groups.CommonGroup;
 import br.edu.ifce.copa.groups.GroupManager;
 import br.edu.ifce.copa.groups.OitavasManager;
-import com.sun.org.apache.bcel.internal.generic.Select;
-import javafx.print.Collation;
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Random;
+//import java.util.Random;
 
 /**
  * @author ikrov
  */
 public class Campeonato {
 
+    public static final int OITAVAS_GROUP_ID = 8;
     private final ArrayList<Selecao> selecoes;
     private final ArrayList<Grupo> grupos;
     private final ArrayList<Match> partidas;
-    private final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public Campeonato() {
         this.selecoes = new ArrayList<>();
@@ -75,12 +73,17 @@ public class Campeonato {
         this.grupos.add(new Grupo("Quartas"));
         this.grupos.add(new Grupo("Semis"));
         this.grupos.add(new Grupo("Final"));
+
+        /*for (int i = 0; i < 20; i++) {
+            this.addRandomMatch();
+        }*/
     }
 
     private void addSelecao(String selecao) {
         int group = this.selecoes.size() / CommonGroup.SELECOES_POR_GRUPO;
         if (this.selecoes.size() % CommonGroup.SELECOES_POR_GRUPO == 0) {
-            char letter = this.alphabet.charAt(group);
+            String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            char letter = alphabet.charAt(group);
             this.grupos.add(new Grupo(String.format("Grupo %s", letter)));
         }
 
@@ -89,36 +92,54 @@ public class Campeonato {
     }
 
     private GroupManager getManager(int groupId) {
-        if (groupId == 8)
+        if (groupId == OITAVAS_GROUP_ID)
             return new OitavasManager(this);
         else
             return new CommonGroup(this, groupId);
     }
 
-    public ArrayList<Selecao> selecoesPorGrupo(int grupoId) {
-        return this.getManager(grupoId).getSelecoes();
+    public ArrayList<Selecao> getSelecoes(int groupId) {
+        return this.getManager(groupId).getSelecoes();
+    }
+
+    public ArrayList<Selecao> getSelecoes() {
+        return this.selecoes;
     }
 
     public ArrayList<Grupo> getGrupos() {
         return this.grupos;
     }
 
+
     /*public void addRandomMatch() {
         int a = Math.abs(new Random().nextInt() % this.selecoes.size());
-        int b = Math.abs((new Random().nextInt() +1) % this.selecoes.size());
+        int b = Math.abs((new Random().nextInt() + 1) % this.selecoes.size());
         int golsA = Math.abs(new Random().nextInt() % 4);
         int golsB = Math.abs(new Random().nextInt() % 4);
         Selecao selA = this.selecoes.get(a);
         Selecao selB = this.selecoes.get(b);
-        
-        this.addMatch(selA, selB, golsA, golsB);
+
+        this.setMatchGols(selA, selB, golsA, golsB, true);
     }*/
 
-    public Match getMatch(int groupId, int matchNumber) {
+    @NotNull
+    public Match getGroupMatch(int groupId, int matchNumber) {
         return this.getManager(groupId).getMatch(matchNumber);
     }
 
+    @NotNull
     public Match getMatch(Selecao a, Selecao b) {
+        Match match = this.findMatch(a, b);
+        if (match == null) {
+            match = new Match(a, b);
+            this.partidas.add(match);
+        }
+
+        return match;
+    }
+
+    @Nullable
+    public Match findMatch(Selecao a, Selecao b) {
         for (Match m : this.partidas) {
             if ((m.getA().equals(a) && m.getB().equals(b)) || (m.getA().equals(b) && m.getB().equals(a)))
                 return m;
@@ -127,22 +148,14 @@ public class Campeonato {
         return null;
     }
 
-    public void addMatch(Selecao a, Selecao b, int golsA, int golsB) {
+    public void setMatchGols(Selecao a, Selecao b, int golsA, int golsB, boolean score) {
         Match match = this.getMatch(a, b);
-        if (match == null) {
-            match = new Match(a, b);
-            this.partidas.add(match);
-        }
-
         match.setGolsA(golsA);
         match.setGolsB(golsB);
+        match.setScore(score);
     }
 
     public ArrayList<Match> getMatches() {
         return this.partidas;
-    }
-
-    public ArrayList<Selecao> getSelecoes() {
-        return this.selecoes;
     }
 }

@@ -35,7 +35,7 @@ public class SimuladorPresenter {
 
     public void setMatch(int match) {
         this.match = match;
-        Match m = this.campeonato.getMatch(this.selectedGroupId, match);
+        Match m = this.campeonato.getGroupMatch(this.selectedGroupId, match);
         this.view.setGolsA(m.getGolsA());
         this.view.setGolsB(m.getGolsB());
 
@@ -54,7 +54,7 @@ public class SimuladorPresenter {
     }
 
     private ArrayList<Selecao> getSelecoes() {
-        return this.campeonato.selecoesPorGrupo(this.selectedGroupId);
+        return this.campeonato.getSelecoes(this.selectedGroupId);
     }
 
     public void onGroupSelected(int groupId) {
@@ -66,8 +66,12 @@ public class SimuladorPresenter {
             return;
 
         ArrayList<Selecao> selecoes = this.getSelecoes();
-        this.campeonato.addMatch(selecoes.get(selecaoAIdx), selecoes.get(selecaoBIdx), golsA, golsB);
+        this.campeonato.setMatchGols(selecoes.get(selecaoAIdx), selecoes.get(selecaoBIdx), golsA, golsB, this.shouldScore());
         this.showPontuacao();
+    }
+
+    private boolean shouldScore() {
+        return selectedGroupId != Campeonato.OITAVAS_GROUP_ID;
     }
 
     public void onNextMatch(int selecaoAIdx, int selecaoBIdx, int golsA, int golsB) {

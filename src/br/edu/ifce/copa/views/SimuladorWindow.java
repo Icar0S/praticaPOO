@@ -4,7 +4,7 @@ package br.edu.ifce.copa.views;
 import br.edu.ifce.copa.Grupo;
 import br.edu.ifce.copa.Pontuacao;
 import br.edu.ifce.copa.Selecao;
-import com.sun.org.apache.xpath.internal.functions.FuncFalse;
+
 
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;

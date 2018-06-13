@@ -19,7 +19,7 @@ public class PontuacaoBuilder {
     }
 
     public ArrayList<Pontuacao> build() {
-        ArrayList<Selecao> selecoes = this.campeonato.selecoesPorGrupo(this.groupId);
+        ArrayList<Selecao> selecoes = this.campeonato.getSelecoes(this.groupId);
         HashMap<Selecao, Pontuacao> pontuacoes = new HashMap<>(selecoes.size());
 
         for (Selecao s : this.campeonato.getSelecoes()) {
@@ -29,7 +29,8 @@ public class PontuacaoBuilder {
         for (Match m : this.campeonato.getMatches()) {
             Pontuacao a = pontuacoes.get(m.getA());
             Pontuacao b = pontuacoes.get(m.getB());
-            this.givePoints(a, b, m);
+            if (m.isScore())
+                this.givePoints(a, b, m);
         }
 
         ArrayList<Pontuacao> list = new ArrayList<>(selecoes.size());

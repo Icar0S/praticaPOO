@@ -3,6 +3,7 @@ package br.edu.ifce.copa.groups;
 import br.edu.ifce.copa.Campeonato;
 import br.edu.ifce.copa.Match;
 import br.edu.ifce.copa.Selecao;
+import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,7 @@ public class CommonGroup extends GroupManager {
     }
 
     @Override
+    @NotNull
     public ArrayList<Selecao> getSelecoes() {
         ArrayList<Selecao> list = new ArrayList<>();
         int start = this.groupId * SELECOES_POR_GRUPO;
@@ -32,12 +34,13 @@ public class CommonGroup extends GroupManager {
     }
 
     @Override
+    @NotNull
     public Match getMatch(int matchNumber) {
-        ArrayList<Selecao> selecoes = this.campeonato.selecoesPorGrupo(groupId);
-        int partida = matchNumber % PARTIDAS_POR_GRUPO;
+        ArrayList<Selecao> selecoes = this.campeonato.getSelecoes(groupId);
+        int match = matchNumber % PARTIDAS_POR_GRUPO;
         int a, b;
 
-        switch (partida) {
+        switch (match) {
             default:
             case 0:
                 a = 0;
@@ -65,10 +68,6 @@ public class CommonGroup extends GroupManager {
                 break;
         }
 
-        Match m = this.campeonato.getMatch(selecoes.get(a), selecoes.get(b));
-        if (m == null)
-            return new Match(selecoes.get(a), selecoes.get(b));
-        else
-            return m;
+        return this.campeonato.getMatch(selecoes.get(a), selecoes.get(b));
     }
 }

@@ -20,56 +20,28 @@ public class Pontuacao implements Comparable<Pontuacao> {
         return pontos;
     }
 
-    public void setPontos(int pontos) {
-        this.pontos = pontos;
-    }
-
     public int getJogos() {
         return jogos;
-    }
-
-    public void setJogos(int jogos) {
-        this.jogos = jogos;
     }
 
     public int getVitorias() {
         return vitorias;
     }
 
-    public void setVitorias(int vitorias) {
-        this.vitorias = vitorias;
-    }
-
     public int getEmpates() {
         return empates;
-    }
-
-    public void setEmpates(int empates) {
-        this.empates = empates;
     }
 
     public int getDerrotas() {
         return derrotas;
     }
 
-    public void setDerrotas(int derrotas) {
-        this.derrotas = derrotas;
-    }
-
     public int getGp() {
         return gp;
     }
 
-    public void setGp(int gp) {
-        this.gp = gp;
-    }
-
     public int getGc() {
         return gc;
-    }
-
-    public void setGc(int gc) {
-        this.gc = gc;
     }
 
     public int getSg() {
@@ -114,6 +86,7 @@ public class Pontuacao implements Comparable<Pontuacao> {
 
         if(compare == 0)
             compare = this.getGc() - pontuacao.getGc();
+
         return compare;
     }
 

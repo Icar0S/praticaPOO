@@ -12,6 +12,7 @@ package br.edu.ifce.copa;
 public class Match {
     private Selecao a, b;
     private int golsA, golsB;
+    private boolean score;
     
     public Match(Selecao a, Selecao b) {
         this.a = a;
@@ -23,6 +24,10 @@ public class Match {
         this.b = b;
         this.golsA = golsA;
         this.golsB = golsB;
+    }
+
+    public boolean isScore() {
+        return score;
     }
 
     public Selecao getA() {return a; }
@@ -54,5 +59,8 @@ public class Match {
     public void setGolsB(int golsB) {
         this.golsB = golsB;
     }
-    
+
+    public void setScore(boolean oitavas) {
+        this.score = oitavas;
+    }
 }
